@@ -2,7 +2,7 @@ import Text.Show.Functions()
 
 --Punto 1
 data Torta = UnaTorta {nombre :: String , cantidadHarina :: Int , cantidadHuevos :: Int , ingredientes :: [Ingrediente]} deriving Show
-torta1 = UnaTorta "Selva Negra" 300 2 [chocolate 20,frutal "Mango" 15]
+torta1 = UnaTorta "Selva Negra" 300 4 [chocolate 20,frutal "Mango" 15]
 
 --Punto 2
 type Calorias = Int
@@ -31,5 +31,21 @@ sumarCalorias :: Torta -> Int -> Ingrediente -> Int
 sumarCalorias  unaTorta sumatoria ingrediente = (+sumatoria).ingrediente $ unaTorta
 
 --b)
+tortaPunto3 = UnaTorta "Torta3" 200 0 ([frutal "banana" 30 , chocolate 80 , bañoDeCrema ] ++ replicate 3 (frutal "frutilla" 20) ++ [\torta -> (*(cantidadHarina $ torta)).cantidadHuevos $ torta])
+-- *Main> totalCalorias tortaPunto3 
+-- 1420
 
+--Punto 4
 
+type Criterio = Torta -> Bool
+esUnaBomba :: Criterio
+esUnaBomba unaTorta = ((>180).totalCalorias $ unaTorta) && ((>3).length.ingredientes $ unaTorta)
+
+esAptaVegano :: Criterio
+esAptaVegano unaTorta = (==0).cantidadHuevos $ unaTorta
+
+esSana :: Calorias -> Criterio
+esSana calorias unaTorta = ((<calorias).totalCalorias $ unaTorta) || ((<200).cantidadHarina $ unaTorta) 
+
+esNutritiva :: Criterio
+esNutritiva unaTorta = (>3).cantidadHuevos $ unaTorta 
