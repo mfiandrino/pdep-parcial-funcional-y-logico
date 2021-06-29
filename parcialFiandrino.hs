@@ -1,8 +1,8 @@
 import Text.Show.Functions()
 
 --Punto 1
-data Torta = UnaTorta {nombre :: String , cantidadHarina :: Int , cantidadHuevos :: Int , ingredientes :: [Ingrediente]} deriving Show
-torta1 = UnaTorta "Selva Negra" 300 4 [chocolate 20,frutal "Mango" 15]
+data Torta = UnaTorta {nombre :: String , cantidadHarina :: Int , cantidadHuevos :: Int , ingredientes :: [Ingrediente]} deriving (Show)
+torta1 = UnaTorta "Selva Negra" 300 3 [chocolate 20,frutal "Mango" 15]
 torta2 = UnaTorta "CheeseCake" 50 1 [puñadoDeFrutas , bañoDeCrema]
 
 --Punto 2
@@ -53,7 +53,7 @@ esNutritiva unaTorta = (>3).cantidadHuevos $ unaTorta
 
 --Punto 5
 listaDeCriterios = [esNutritiva , esSana 100 , esUnaBomba]
-type Condicion = Torta -> [Criterio] -> Bool
+
 tortasMasElegidas :: [Torta] -> [Criterio] -> Condicion -> [Torta]
 tortasMasElegidas tortas criterios condicion = filter (cumpleCondicion criterios condicion) tortas
 
@@ -61,6 +61,7 @@ cumpleCondicion :: [Criterio] -> Condicion -> Torta -> Bool
 cumpleCondicion criterios condicion torta = condicion torta criterios
 
 --1)
+type Condicion = Torta -> [Criterio] -> Bool
 condicion1 :: Condicion
 condicion1 unaTorta criterios = ((>2).length.ingredientes $ unaTorta) && (any ($ unaTorta) criterios)
 -- *Main> tortasMasElegidas [torta1,torta2,tortaPunto3] listaDeCriterios condicion1
@@ -77,3 +78,17 @@ condicion3 :: Condicion
 condicion3 unaTorta criterios = ((<100).cantidadHarina $ unaTorta) && (any ($ unaTorta) criterios)
 -- *Main> tortasMasElegidas [torta1,torta2,tortaPunto3] listaDeCriterios condicion3
 -- [UnaTorta {nombre = "CheeseCake", cantidadHarina = 50, cantidadHuevos = 1, ingredientes = [<function>,<function>]}]
+
+
+--Punto 6
+--a)
+tortaInfinita = UnaTorta "LaTortaInfinita" 1000 3 (cycle [puñadoDeFrutas , bañoDeCrema , frutal "Manzana" 100])
+tortaInfinita2 = UnaTorta "LaTortaInfinita2" 1000 80 (cycle [puñadoDeFrutas])
+
+--b)
+
+--c)
+
+
+
+
