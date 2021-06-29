@@ -14,9 +14,13 @@ chocolate :: CantidadGramos -> Ingrediente
 chocolate gramos unaTorta = (*gramos).cantidadHuevos $ unaTorta
 
 type Fruta = String
-frutal :: Fruta -> CantidadGramos -> Ingrediente --la funcion no usa nada de la torta, revisar
+{-Teoricamente es un ingrediente pero la funcion no usa datos de la torta, por lo tanto pongo que es del tipo 
+ingrediente y que reciba la torta para luego agregarlo a las listas de ingredientes de las tortas-}
+frutal :: Fruta -> CantidadGramos -> Ingrediente 
 frutal unaFruta gramos unaTorta = (flip div 2).(*gramos).length $ unaFruta
 
+{-Teoricamente es un ingrediente pero la funcion no usa datos de la torta, por lo tanto pongo que es del tipo 
+ingrediente y que reciba la torta para luego agregarlo a las listas de ingredientes de las tortas-}
 puñadoDeFrutas :: Ingrediente 
 puñadoDeFrutas unaTorta = 100
 
@@ -87,8 +91,20 @@ tortaInfinita2 = UnaTorta "LaTortaInfinita2" 1000 80 (cycle [puñadoDeFrutas])
 
 --b)
 
---c)
 
+--c)
+{-
+No se puede verificar si un ingrediente esta incluido en la torta infinita ya que en Haskell las funciones no pueden ser del tipo Eq
+para ser comparadas con la funcion elem, y justamente los ingredientes son funciones. Al colocar deriving (Show,Eq) al tipo de dato Torta,
+me indica que no se puede aplicar ya que el tipo Ingrediente (funcion) no es del tipo Eq.
+En caso de que fuera un tipo de dato generico, como por ejemplo un String, Int, etc. y el ingrediente no estuviera en la torta infinita,
+el programa se quedaria buscando infinitamente dicho ingrediente, ya que la funcion elem recorrera todos los elementos de la lista infinita
+de ingredientes no encontrando ninguno que coincida.
+En el caso que el ingrediente estuviera en la torta infinita, el programa devolvera True. Esto se debe al lazy evaluation, que hace que 
+solo se genere lo que se va a usar, por lo tanto, el programa no crea primero la lista infinita (que nunca terminaria) y luego se fija 
+si hay un coincide algun elemento, sino que sabiendo que fue aplicada la funcion elem, va a generar la lista hasta encontrar dicho elemento,
+sin generar toda la lista infinita.    
+-}
 
 
 
