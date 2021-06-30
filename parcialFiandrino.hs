@@ -90,7 +90,24 @@ tortaInfinita = UnaTorta "LaTortaInfinita" 1000 3 (cycle [puñadoDeFrutas , bañ
 tortaInfinita2 = UnaTorta "LaTortaInfinita2" 1000 80 (cycle [puñadoDeFrutas])
 
 --b)
+{-
+Aplicando la condicion2 a la funcion principal del parcial, no se podria utilizar en el caso en el que todos los criterios del conjunto de criterios
+se cumplan, ya que el la funcion all nunca terminaria.
+*Main> tortasMasElegidas [tortaInfinita] [esUnaBomba] condicion2
+^CInterrupted.
+En el caso que los huevos sean distintos a 3 o que algun criterio del conjunto de criterios no se cumpliera ya devolveria una lista vacia de tortas, 
+ya que el por el lazy evaluation, al no cumplirse el primer argunmento del && ya no se cumple la condicion y, a su vez, al encontrar un criterio que 
+no cumpla, el all no sigue analizando los demas. 
+*Main> tortasMasElegidas [tortaInfinita] [esNutritiva] condicion2
+[]
 
+En los casos de usar las condiciones 1 y 3, pasa lo mismo con el primer argumento del &&, si no se cumple ya la torta no cumple con la condicion.
+Pero si cumple eso, el any pasara a la accion. En caso de que encuentre ningun criterio se cumpla, el any seguira analizando en busca de uno que si,
+corriendo el programa infinitamente.
+En caso de que encuentre un criterio que cumpla y se cumpla el primer argumento del &&, devolvera la tortaInfinita.
+-}
+
+ 
 
 --c)
 {-
