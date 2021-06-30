@@ -1,7 +1,7 @@
 import Text.Show.Functions()
 
 --Punto 1
-data Torta = UnaTorta {nombre :: String , cantidadHarina :: Int , cantidadHuevos :: Int , ingredientes :: [Ingrediente]} deriving (Show)
+data Torta = UnaTorta {nombre :: String , cantidadHarina :: Int , cantidadHuevos :: Int , ingredientes :: [Ingrediente]} deriving Show
 torta1 = UnaTorta "Selva Negra" 300 3 [chocolate 20,frutal "Mango" 15]
 torta2 = UnaTorta "CheeseCake" 50 1 [puñadoDeFrutas , bañoDeCrema]
 
@@ -102,9 +102,9 @@ no cumpla, el all no sigue analizando los demas.
 []
 
 En los casos de usar las condiciones 1 y 3, pasa lo mismo con el primer argumento del &&, si no se cumple ya la torta no cumple con la condicion.
-Pero si cumple eso, el any pasara a la accion. En caso de que encuentre ningun criterio se cumpla, el any seguira analizando en busca de uno que si,
-corriendo el programa infinitamente.
-En caso de que encuentre un criterio que cumpla y se cumpla el primer argumento del &&, devolvera la tortaInfinita.
+Pero si cumple eso, el any pasara a la accion. En caso de que no haya criterios que se cumplan, el any no encontrará ningun criterio que se cumpla y 
+seguira analizando en busca de uno que si, corriendo el programa infinitamente.
+En caso de que se cumpla el primer argumento del && y encuentre un criterio que cumpla, devolvera la tortaInfinita.
 -}
 
  
