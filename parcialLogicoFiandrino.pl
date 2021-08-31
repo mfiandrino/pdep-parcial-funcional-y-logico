@@ -13,6 +13,7 @@ heroe(arthas,55,draenor,humano(paladin,50)).
 heroe(illidan,150,temploOscuro,elfo(250,noche)).
 heroe(jaina,40,dalaran,humano(mago,110)).
 
+esHeroe(Heroe) :- heroe(Heroe,_,_,_).
 esCiudad(Ciudad) :- heroe(_,_,Ciudad,_).
 
 %amigo(Heroe,Amigo).
@@ -70,7 +71,32 @@ esCiudadConUnicoHeroe(Ciudad) :-
     not((viveEn(OtroHeroe,Ciudad) , Heroe \= OtroHeroe)).
 
 % ------------Punto 4-----------
+% a) puedeHacerGrupo(Heroe,OtroHeroe)
+puedeHacerGrupo(Heroe,OtroHeroe) :-
+    sonAmigosDeCualquierNivel(Heroe,OtroHeroe),
+    Heroe \= OtroHeroe.
+
+sonAmigosDeCualquierNivel(Heroe,OtroHeroe) :-
+    sonAmigos(Heroe,OtroHeroe).
+
+sonAmigosDeCualquierNivel(Heroe,OtroHeroe) :-
+    sonAmigos(Heroe,OtroAmigo),
+    sonAmigosDeCualquierNivel(OtroAmigo,OtroHeroe).
 
 
+sonAmigos(Heroe,OtroHeroe) :- amigo(Heroe,OtroHeroe).
+sonAmigos(Heroe,OtroHeroe) :- amigo(OtroHeroe,Heroe).
 
+% b) noTieneAliados(Heroe).
+noTieneAliados(Heroe) :- 
+    esHeroe(Heroe),
+    not(puedeHacerGrupo(Heroe,_)).
 
+% c) tieneAlMenosDosAliados(Heroe).
+tieneAlMenosDosAliados(Heroe) :-
+    esHeroe(Heroe),
+    puedeHacerGrupo(Heroe,OtroHeroe),
+    puedeHacerGrupo(Heroe,OtroHeroeMas),
+    OtroHeroe \= OtroHeroeMas.
+
+% ------------Punto 5-----------
