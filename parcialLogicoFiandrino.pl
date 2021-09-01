@@ -136,10 +136,34 @@ esValeroso(Heroe) :-
     Nivel >= 60,
     esHonorable(Heroe).
 
-esUsuarioDeLaMagia(Heroe) :- heroe(Heroe,_,_,orco(_,chaman)).
+esUsuarioDeLaMagia(Heroe) :- heroe(Heroe,_,_,orco(_,chaman,_)).
 esUsuarioDeLaMagia(Heroe) :- heroe(Heroe,_,_,humano(mago,_)).
 
-    
+
+
+% ------------Punto 7-----------
+/*
+Durante el parcial se hizo uso del polimorfismo en predicados como "nivelSegunRaza" y "esHonorableSegunRaza", en donde dependiendo la raza que le pasabamos
+el predicado se comportaba de una manera distinta, por eso son polimorficos esos predicados.
+
+A su vez tambien utilice predicados de orden superior como "not" en el predicado "noTieneAliados" para negar el predicado "puedeHacerGrupo".
+Otro predicado de orden superior utilizado fue "forall" para verificar que se cumplan para todo en los siguientes predicados:
+esCiudadHonorable(Ciudad) :-
+    esCiudad(Ciudad),
+    cantDeHeroesHonorables(Ciudad,Cantidad),
+    forall(cantDeHeroesHonorables(_,OtraCantidad) , Cantidad >= OtraCantidad).
+puedeCompletar(Grupo,pruebaDelCruzado) :-
+    forall(member(Heroe, Grupo),esValeroso(Heroe)).
+
+puedeCompletar(Grupo,torreDeLosMagos) :-
+    forall(member(Heroe, Grupo),esUsuarioDeLaMagia(Heroe)).
+
+Tambien utilice el predicado de orden superior findall para generar una lista con todos los heroes honorables que viven en una determinada ciudad:
+cantDeHeroesHonorables(Ciudad,Cantidad) :-
+    esCiudad(Ciudad),
+    findall(Heroe,(viveEn(Heroe,Ciudad),esHonorable(Heroe)),Heroes),
+    length(Heroes, Cantidad).
+*/
 
 
 
