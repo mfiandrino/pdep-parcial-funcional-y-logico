@@ -127,9 +127,11 @@ puedeCompletar(Grupo,temploOscuro) :-
     Nivel >= 50.
 
 puedeCompletar(Grupo,pruebaDelCruzado) :-
+    grupo(Grupo),
     forall(member(Heroe, Grupo),esValeroso(Heroe)).
 
 puedeCompletar(Grupo,torreDeLosMagos) :-
+    grupo(Grupo),
     forall(member(Heroe, Grupo),esUsuarioDeLaMagia(Heroe)).
 
 esValeroso(Heroe) :-
