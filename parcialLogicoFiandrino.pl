@@ -120,6 +120,7 @@ combinatoria([_|Heroes],HeroesCombinatoria) :-
 
 % ------------Punto 6-----------
 puedeCompletar(Grupo,temploOscuro) :-
+    grupo(Grupo),
     member(Heroe,Grupo),
     heroe(Heroe,_,_,elfo(_,noche)),
     nivelDeUnHeroe(Heroe,Nivel),
