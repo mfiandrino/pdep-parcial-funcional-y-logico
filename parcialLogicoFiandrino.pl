@@ -87,6 +87,7 @@ sonAmigosDeCualquierNivel(Heroe,OtroHeroe) :-
 sonAmigos(Heroe,OtroHeroe) :- amigo(Heroe,OtroHeroe).
 sonAmigos(Heroe,OtroHeroe) :- amigo(OtroHeroe,Heroe).
 
+
 % b) noTieneAliados(Heroe).
 noTieneAliados(Heroe) :- 
     esHeroe(Heroe),
@@ -100,3 +101,45 @@ tieneAlMenosDosAliados(Heroe) :-
     OtroHeroe \= OtroHeroeMas.
 
 % ------------Punto 5-----------
+% grupo(ListaDeIntegrantes).
+
+grupo(Integrantes) :-
+    findall(Heroe,esHeroe(Heroe),Heroes),
+    combinatoria(Heroes,Integrantes).
+
+
+combinatoria([E],[E]).
+combinatoria([Heroe|Heroes],[Heroe|HeroesCombinatoria]) :-
+    member(OtroHeroe,HeroesCombinatoria),
+    puedeHacerGrupo(Heroe,OtroHeroe),
+    combinatoria(Heroes,HeroesCombinatoria).
+
+combinatoria([_|Heroes],HeroesCombinatoria) :-
+    combinatoria(Heroes,HeroesCombinatoria).
+
+
+% ------------Punto 6-----------
+puedeCompletar(Grupo,temploOscuro) :-
+    member(Heroe,Grupo),
+    heroe(Heroe,_,_,elfo(_,noche)),
+    nivelDeUnHeroe(Heroe,Nivel),
+    Nivel >= 50.
+
+puedeCompletar(Grupo,pruebaDelCruzado) :-
+    forall(member(Heroe, Grupo),esValeroso(Heroe)).
+
+puedeCompletar(Grupo,torreDeLosMagos) :-
+    forall(member(Heroe, Grupo),esUsuarioDeLaMagia(Heroe)).
+
+esValeroso(Heroe) :-
+    nivelDeUnHeroe(Heroe,Nivel),
+    Nivel >= 60,
+    esHonorable(Heroe).
+
+esUsuarioDeLaMagia(Heroe) :- heroe(Heroe,_,_,orco(_,chaman)).
+esUsuarioDeLaMagia(Heroe) :- heroe(Heroe,_,_,humano(mago,_)).
+
+    
+
+
+
